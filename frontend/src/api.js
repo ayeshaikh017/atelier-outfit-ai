@@ -1,4 +1,4 @@
-const B = 'http://127.0.0.1:5000'
+const B = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'
 
 const j = async (r) => {
   const d = await r.json()
@@ -25,3 +25,5 @@ export const recommend = (occasion) =>
     body: JSON.stringify({ occasion }),
   }).then(j)
 export const getInsights = () => fetch(B + '/api/insights').then(j)
+export const getCatalog = () => fetch(B + '/api/catalog').then(j)
+export const garmentUrl = (f) => `${B}/api/garments/${f}`

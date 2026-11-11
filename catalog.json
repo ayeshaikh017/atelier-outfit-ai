@@ -1,0 +1,366 @@
+{
+  "brand": "Urban Loom",
+  "items": [
+    {
+      "id": "UL-T01",
+      "brand": "Urban Loom",
+      "name": "Classic Crew Tee",
+      "cat": "Top",
+      "color": "#F2F2F2",
+      "price": 799,
+      "style": "Casual",
+      "occ": [
+        "College",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-T01.svg"
+    },
+    {
+      "id": "UL-T02",
+      "brand": "Urban Loom",
+      "name": "Sage Boxy Tee",
+      "cat": "Top",
+      "color": "#7FA38F",
+      "price": 899,
+      "style": "Streetwear",
+      "occ": [
+        "Casual",
+        "Party"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-T02.svg"
+    },
+    {
+      "id": "UL-T03",
+      "brand": "Urban Loom",
+      "name": "Navy Long Sleeve",
+      "cat": "Top",
+      "color": "#22304F",
+      "price": 1199,
+      "style": "Smart Casual",
+      "occ": [
+        "Office",
+        "College"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-T03.svg"
+    },
+    {
+      "id": "UL-T04",
+      "brand": "Urban Loom",
+      "name": "Blush Long Sleeve",
+      "cat": "Top",
+      "color": "#F0A99B",
+      "price": 1199,
+      "style": "Casual",
+      "occ": [
+        "Casual",
+        "Party"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-T04.svg"
+    },
+    {
+      "id": "UL-T05",
+      "brand": "Urban Loom",
+      "name": "Charcoal Hoodie",
+      "cat": "Top",
+      "color": "#3A3F44",
+      "price": 1799,
+      "style": "Streetwear",
+      "occ": [
+        "College",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-T05.svg"
+    },
+    {
+      "id": "UL-T06",
+      "brand": "Urban Loom",
+      "name": "Mustard Hoodie",
+      "cat": "Top",
+      "color": "#D9A441",
+      "price": 1799,
+      "style": "Streetwear",
+      "occ": [
+        "Casual",
+        "Party"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-T06.svg"
+    },
+    {
+      "id": "UL-B01",
+      "brand": "Urban Loom",
+      "name": "Indigo Slim Jeans",
+      "cat": "Bottom",
+      "color": "#2F4A75",
+      "price": 1999,
+      "style": "Casual",
+      "occ": [
+        "College",
+        "Casual",
+        "Party"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-B01.svg"
+    },
+    {
+      "id": "UL-B02",
+      "brand": "Urban Loom",
+      "name": "Black Straight Jeans",
+      "cat": "Bottom",
+      "color": "#1E1E22",
+      "price": 2099,
+      "style": "Casual",
+      "occ": [
+        "Party",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-B02.svg"
+    },
+    {
+      "id": "UL-B03",
+      "brand": "Urban Loom",
+      "name": "Khaki Chinos",
+      "cat": "Bottom",
+      "color": "#B59F7A",
+      "price": 1799,
+      "style": "Smart Casual",
+      "occ": [
+        "Office",
+        "College"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-B03.svg"
+    },
+    {
+      "id": "UL-B04",
+      "brand": "Urban Loom",
+      "name": "Olive Chinos",
+      "cat": "Bottom",
+      "color": "#6B7348",
+      "price": 1799,
+      "style": "Smart Casual",
+      "occ": [
+        "Office",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-B04.svg"
+    },
+    {
+      "id": "UL-B05",
+      "brand": "Urban Loom",
+      "name": "Denim Shorts",
+      "cat": "Bottom",
+      "color": "#5E82B3",
+      "price": 1299,
+      "style": "Casual",
+      "occ": [
+        "Casual",
+        "College"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-B05.svg"
+    },
+    {
+      "id": "UL-B06",
+      "brand": "Urban Loom",
+      "name": "Plum Mini Skirt",
+      "cat": "Bottom",
+      "color": "#7A3E5C",
+      "price": 1399,
+      "style": "Party",
+      "occ": [
+        "Party",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-B06.svg"
+    },
+    {
+      "id": "UL-D01",
+      "brand": "Urban Loom",
+      "name": "Rose Midi Dress",
+      "cat": "Dress",
+      "color": "#E58E9B",
+      "price": 2799,
+      "style": "Party",
+      "occ": [
+        "Party",
+        "Wedding"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-D01.svg"
+    },
+    {
+      "id": "UL-D02",
+      "brand": "Urban Loom",
+      "name": "Midnight Dress",
+      "cat": "Dress",
+      "color": "#1D2A4A",
+      "price": 2999,
+      "style": "Formal",
+      "occ": [
+        "Party",
+        "Office"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-D02.svg"
+    },
+    {
+      "id": "UL-D03",
+      "brand": "Urban Loom",
+      "name": "Emerald Dress",
+      "cat": "Dress",
+      "color": "#2E7D5B",
+      "price": 2899,
+      "style": "Party",
+      "occ": [
+        "Party",
+        "Wedding"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-D03.svg"
+    },
+    {
+      "id": "UL-J01",
+      "brand": "Urban Loom",
+      "name": "Black Bomber Jacket",
+      "cat": "Jacket",
+      "color": "#25262B",
+      "price": 3499,
+      "style": "Streetwear",
+      "occ": [
+        "Casual",
+        "Party"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-J01.svg"
+    },
+    {
+      "id": "UL-J02",
+      "brand": "Urban Loom",
+      "name": "Tan Overshirt Jacket",
+      "cat": "Jacket",
+      "color": "#C19A6B",
+      "price": 3299,
+      "style": "Smart Casual",
+      "occ": [
+        "Office",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-J02.svg"
+    },
+    {
+      "id": "UL-J03",
+      "brand": "Urban Loom",
+      "name": "Denim Jacket",
+      "cat": "Jacket",
+      "color": "#4F6D9A",
+      "price": 2999,
+      "style": "Casual",
+      "occ": [
+        "College",
+        "Casual"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "image": "UL-J03.svg"
+    }
+  ]
+}

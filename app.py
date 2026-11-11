@@ -81,5 +81,13 @@ def plots(name):
     if name not in ("confusion_matrix.png", "reliability.png"): return "", 404
     return send_from_directory(".", name)
 
+@app.get("/api/catalog")
+def catalog():
+    return jsonify(json.load(open("catalog.json", encoding="utf-8")))
+
+@app.get("/api/garments/<name>")
+def garment(name):
+    return send_from_directory(os.path.join("static", "garments"), name)
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
