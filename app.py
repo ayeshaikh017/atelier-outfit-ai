@@ -4,14 +4,31 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import utils as U
 
+BASE = os.path.dirname(os.path.abspath(__file__))
+P = lambda *a: os.path.join(BASE, *a)
+
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 12 * 1024 * 1024   # 12 MB upload cap
 CORS(app)
-clf = joblib.load("model.joblib")
+clf = joblib.load(P("model.joblib"))
 
 # ---------- wardrobe persistence (simple JSON file) ----------
-WFILE = "wardrobe.json"
-WARDROBE = json.load(open(WFILE)) if os.path.exists(WFILE) else []
-def save_wardrobe(): json.dump(WARDROBE, open(WFILE, "w"))
+WFILE = P("wardrobe.json")
+try: WARDROBE = json.load(open(WFILE, encoding="utf-8")) if os.path.exists(WFILE) else []
+except (ValueError, OSError): WARDROBE = []
+def save_wardrobe():
+    tmp = WFILE + ".tmp"
+    json.dump(WARDROBE, open(tmp, "w", encoding="utf-8")); os.replace(tmp, WFILE)   # atomic: no corrupt file
+
+@app.errorhandler(413)
+def too_big(e): return jsonify(error="Image too large (max 12 MB)"), 413
+@app.errorhandler(Exception)
+def boom(e):
+    if hasattr(e, "code") and isinstance(e.code, int): return jsonify(error=getattr(e, "description", "Error")), e.code
+    app.logger.exception(e); return jsonify(error="Server error while processing the image"), 500
+
+@app.get("/api/health")
+def health(): return jsonify(ok=True, wardrobe=len(WARDROBE))
 
 def clean(o):
     """numpy -> plain python so jsonify works"""
@@ -22,7 +39,8 @@ def clean(o):
     return o
 
 def read_img(f):
-    return cv2.imdecode(np.frombuffer(f.read(), np.uint8), cv2.IMREAD_COLOR)
+    try: return cv2.imdecode(np.frombuffer(f.read(), np.uint8), cv2.IMREAD_COLOR)
+    except cv2.error: return None
 
 def thumb(img, w=260):
     h = int(img.shape[0] * w / img.shape[1])
@@ -35,6 +53,7 @@ def analyze():
     if not f: return jsonify(error="No image uploaded"), 400
     img = read_img(f)
     if img is None: return jsonify(error="Invalid image file"), 400
+    if img.shape[0] < 100 or img.shape[1] < 50: return jsonify(error="Image too small, use a full-body photo"), 400
     return jsonify(clean(U.analyze(img, clf)))
 
 @app.get("/api/wardrobe")
@@ -49,7 +68,7 @@ def add_item():
     if img is None: return jsonify(error="Invalid image file"), 400
     rgb = [int(v) for v in U.dominant(img, 2)[0][0]]
     item = dict(id=max([w["id"] for w in WARDROBE], default=0) + 1,
-                cat=request.form.get("cat", "Top"), rgb=rgb, cname=U.color_name(rgb),
+                cat=request.form.get("cat", "Top") if request.form.get("cat") in ("Top", "Bottom", "Shoes") else "Top", rgb=rgb, cname=U.color_name(rgb),
                 occ=[o for o in request.form.get("occ", "").split(",") if o],
                 img=thumb(img))
     WARDROBE.append(item); save_wardrobe()
@@ -73,21 +92,21 @@ def recommend():
 
 @app.get("/api/insights")
 def insights():
-    m = json.load(open("metrics.json")) if os.path.exists("metrics.json") else None
+    m = json.load(open(P("metrics.json"))) if os.path.exists(P("metrics.json")) else None
     return jsonify(metrics=m)
 
 @app.get("/api/plots/<name>")
 def plots(name):
     if name not in ("confusion_matrix.png", "reliability.png"): return "", 404
-    return send_from_directory(".", name)
+    return send_from_directory(BASE, name)
 
 @app.get("/api/catalog")
 def catalog():
-    return jsonify(json.load(open("catalog.json", encoding="utf-8")))
+    return jsonify(json.load(open(P("catalog.json"), encoding="utf-8")))
 
 @app.get("/api/garments/<name>")
 def garment(name):
-    return send_from_directory(os.path.join("static", "garments"), name)
+    return send_from_directory(P("static", "garments"), name)
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=5000, debug=True, use_reloader=False)

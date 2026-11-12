@@ -34,7 +34,7 @@ export default function Uncertainty({ analysis: R, go }) {
                   <XAxis type="number" hide domain={[0, 1]} />
                   <YAxis type="category" dataKey="name" width={80} tick={{ fontSize: 11 }} />
                   <Tooltip formatter={(v) => `${(v * 100).toFixed(0)}%`} />
-                  <Bar dataKey="v" radius={4}>{toData(d.dist).map((_, i) => <Cell key={i} fill={i === 0 ? '#B4532A' : '#CFC6EA'} />)}</Bar>
+                  <Bar dataKey="v" radius={4}>{toData(d.dist).map((_, i) => <Cell key={i} fill={i === 0 ? '#3F7A63' : '#CFE1D8'} />)}</Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -48,7 +48,7 @@ export default function Uncertainty({ analysis: R, go }) {
           <BarChart data={toData(R.style_dist)}>
             <XAxis dataKey="name" tick={{ fontSize: 12 }} /><YAxis tick={{ fontSize: 12 }} />
             <Tooltip formatter={(v) => `${(v * 100).toFixed(0)}%`} />
-            <Bar dataKey="v" fill="#8E7CC3" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="v" fill="#3F7A63" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
         <p className="muted sm">Predictions below 50% confidence are flagged "Uncertain" (reject option).</p>
