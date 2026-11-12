@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { health } from './api'
 import { LayoutDashboard, Sparkles, Gauge, Shirt, Activity, Hexagon, Camera } from 'lucide-react'
 import Dashboard from './pages/Dashboard'
 import Analyzer from './pages/Analyzer'
@@ -21,6 +22,11 @@ export default function App() {
   const [analysis, setAnalysis] = useState(null)
   const [preview, setPreview] = useState(null)
   const [history, setHistory] = useState([])
+  const [online, setOnline] = useState(null)
+  useEffect(() => {
+    const ping = () => health().then(() => setOnline(true)).catch(() => setOnline(false))
+    ping(); const t = setInterval(ping, 8000); return () => clearInterval(t)
+  }, [])
 
   const onResult = (res, url) => {
     setAnalysis(res); setPreview(url)
@@ -40,7 +46,7 @@ export default function App() {
         </div>
         <nav>
           {NAV.map(([id, label, Icon]) => (
-            <button key={id} className={page === id ? 'nav on' : 'nav'} onClick={() => setPage(id)}>
+            <button key={id} className={page === id ? 'nav on' : 'nav'} aria-current={page === id ? 'page' : undefined} onClick={() => setPage(id)}>
               <Icon size={18} /> {label}
             </button>
           ))}
@@ -51,11 +57,11 @@ export default function App() {
       <main className="main">
         <div className="topbar">
           <div className="crumb">Atelier / <b>{current}</b></div>
-          <div className="chip"><i /> Model ready</div>
+          <div className={'chip ' + (online === false ? 'off' : '')}><i /> {online === null ? 'Connecting…' : online ? 'Model ready' : 'Server offline'}</div>
         </div>
         <div className="page" key={page}>
           {page === 'dashboard' && <Dashboard analysis={analysis} history={history} go={setPage} />}
-          {page === 'analyzer' && <Analyzer analysis={analysis} preview={preview} onResult={onResult} />}
+          {page === 'analyzer' && <Analyzer analysis={analysis} preview={preview} onResult={onResult} onClear={() => { setAnalysis(null); setPreview(null) }} />}
           {page === 'uncertainty' && <Uncertainty analysis={analysis} go={setPage} />}
           {page === 'tryon' && <TryOn onResult={onResult} go={setPage} />}
           {page === 'wardrobe' && <Wardrobe />}

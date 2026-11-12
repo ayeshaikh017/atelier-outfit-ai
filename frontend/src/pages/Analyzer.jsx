@@ -1,17 +1,23 @@
-import { useState } from 'react'
-import { Upload } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { Upload, Trash2 } from 'lucide-react'
 import { analyze, hex } from '../api'
 
-export default function Analyzer({ analysis: R, preview, onResult }) {
+export default function Analyzer({ analysis: R, preview, onResult, onClear }) {
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState('')
+  const [over, setOver] = useState(false)
+  const last = useRef(null)
 
   const pick = async (file) => {
     if (!file) return
+    if (!file.type.startsWith('image/')) return setErr('Please choose an image file')
     setErr(''); setLoading(true)
-    try { onResult(await analyze(file), URL.createObjectURL(file)) }
-    catch (e) { setErr(e.message) }
-    setLoading(false)
+    try {
+      const res = await analyze(file)
+      if (last.current) URL.revokeObjectURL(last.current)
+      last.current = URL.createObjectURL(file); onResult(res, last.current)
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
   }
 
   const zones = R ? (R.is_dress ? ['top', 'shoes'] : ['top', 'bottom', 'shoes']) : []
@@ -21,22 +27,25 @@ export default function Analyzer({ analysis: R, preview, onResult }) {
       <div className="page-head"><div className="eyebrow">Outfit Analyzer</div><h2>Upload your look</h2></div>
       <div className="two">
         <div>
-          <label className="drop">
-            <input type="file" accept="image/*" hidden onChange={(e) => pick(e.target.files[0])} />
+          <label className={'drop' + (over ? ' over' : '') + (loading ? ' busy' : '')}
+            onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)}
+            onDrop={(e) => { e.preventDefault(); setOver(false); pick(e.dataTransfer.files[0]) }}>
+            <input type="file" accept="image/*" hidden onChange={(e) => { pick(e.target.files[0]); e.target.value = '' }} />
             {preview ? <img src={preview} alt="outfit" /> : (
               <div className="drop-empty"><Upload size={28} />
-                <p>Click to upload a full-body photo</p>
+                <p>Click or drop a full-body photo</p>
                 <small>Stand straight · plain background · good light</small></div>)}
           </label>
-          {loading && <p className="muted">Analysing…</p>}
+          {preview && !loading && <button className="btn ghost" onClick={() => { setErr(''); onClear() }}><Trash2 size={15} /> Remove photo</button>}
+          {loading && <div className="progress"><i /></div>}
           {err && <p className="error">{err}</p>}
         </div>
 
         <div>
-          {!R && <div className="card"><div className="label">Result</div><p className="muted">Your analysis will appear here.</p></div>}
+          {!R && <div className="card"><div className="label">Result</div><p className="muted">Your analysis will appear here.</p>{loading && <div className="skel" />}</div>}
           {R && (
             <>
-              <div className="row2">
+              <div className="row2 stagger">
                 <div className="card center">
                   <div className="ring" style={{ '--p': R.score * 10 }}><span>{R.score}<small>/10</small></span></div>
                   <div className="label" style={{ marginTop: 12 }}>Outfit score</div>

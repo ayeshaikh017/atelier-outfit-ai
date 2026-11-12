@@ -49,8 +49,10 @@ for iid,name,c,shape,col,price,style,occ in ITEMS:
     if shape == "jacket":         extra = f'<path d="M100 40 V225" stroke="{dk}" stroke-width="3"/>'
     if shape in ("jeans","chino","shorts","skirt"): extra = f'<rect x="{55 if shape!="skirt" else 62}" y="10" width="{90 if shape!="skirt" else 76}" height="12" fill="{dk}" opacity=".6"/>'
     if shape == "dress":          extra = f'<path d="M62 75 H138" stroke="{dk}" stroke-width="5"/>'
-    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240">'
-           f'<path d="{d}" fill="{col}" stroke="{dk}" stroke-width="3" stroke-linejoin="round"/>{extra}</svg>')
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" preserveAspectRatio="none">'
+           f'<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient></defs>'
+           f'<path d="{d}" fill="{col}" stroke="{dk}" stroke-width="3" stroke-linejoin="round"/>'
+           f'<path d="{d}" fill="url(#g)"/>{extra}</svg>')
     fn = f"{iid}.svg"; open(os.path.join(OUT, fn), "w").write(svg)
     cat.append(dict(id=iid, brand=BRAND, name=name, cat=c, color=col, price=price,
                     style=style, occ=occ.split(","), sizes=["S","M","L","XL"], image=fn))

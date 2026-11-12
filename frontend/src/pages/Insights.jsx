@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getInsights } from '../api'
+import { getInsights, plotUrl } from '../api'
 
 export default function Insights() {
   const [m, setM] = useState(undefined)
@@ -31,8 +31,8 @@ export default function Insights() {
         </>
       )}
       <div className="grid2">
-        <div className="card"><div className="label">Confusion matrix</div><img className="plot" src="http://127.0.0.1:5000/api/plots/confusion_matrix.png" alt="confusion matrix" /></div>
-        <div className="card"><div className="label">Reliability diagram</div><img className="plot" src="/api/plots/reliability.png" alt="reliability" />
+        <div className="card"><div className="label">Confusion matrix</div><img className="plot" src={plotUrl('confusion_matrix.png')} alt="confusion matrix" /></div>
+        <div className="card"><div className="label">Reliability diagram</div><img className="plot" src={plotUrl('reliability.png')} alt="reliability" />
           <p className="muted sm">Points near the diagonal mean predicted confidence matches real accuracy (well-calibrated).</p></div>
       </div>
     </>

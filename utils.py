@@ -155,8 +155,6 @@ def analyze(img_bgr, clf):
     b["name"] = "Jeans" if b["cname"] in ("Denim","Blue","Navy") else f'{b["cname"]} Trousers'
     t["name"] = f'{t["cname"]} {t["label"]}'
     s["name"] = f'{s["cname"]} {s["label"]}' + ("s" if s["label"] != "Ankle boot" else "")
-    if not is_dress:
-        b["name"] = b["name"]
     bgroup = "none" if is_dress else ("jeans" if b["name"] == "Jeans" else "trouser")
 
     items = [t, s] if is_dress else [t, b, s]
